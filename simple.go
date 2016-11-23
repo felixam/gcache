@@ -62,7 +62,7 @@ func (c *SimpleCache) set(key, value interface{}) (interface{}, error) {
 // If it dose not exists key and has LoaderFunc,
 // generate a value using `LoaderFunc` method returns value.
 func (c *SimpleCache) Get(key interface{}) (interface{}, error) {
-	v, err := c.getValue(key)
+	v, err := c.GetValue(key)
 	if err != nil {
 		return c.getWithLoader(key, true)
 	}
@@ -73,7 +73,7 @@ func (c *SimpleCache) Get(key interface{}) (interface{}, error) {
 // If it dose not exists key, returns KeyNotFoundError.
 // And send a request which refresh value for specified key if cache object has LoaderFunc.
 func (c *SimpleCache) GetIFPresent(key interface{}) (interface{}, error) {
-	v, err := c.getValue(key)
+	v, err := c.GetValue(key)
 	if err != nil {
 		return c.getWithLoader(key, false)
 	}
@@ -101,7 +101,7 @@ func (c *SimpleCache) get(key interface{}, onLoad bool) (interface{}, error) {
 	return nil, KeyNotFoundError
 }
 
-func (c *SimpleCache) getValue(key interface{}) (interface{}, error) {
+func (c *SimpleCache) GetValue(key interface{}) (interface{}, error) {
 	it, err := c.get(key, false)
 	if err != nil {
 		return nil, err

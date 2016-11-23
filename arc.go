@@ -128,7 +128,7 @@ func (c *ARC) set(key, value interface{}) (interface{}, error) {
 
 // Get a value from cache pool using key if it exists. If not exists and it has LoaderFunc, it will generate the value using you have specified LoaderFunc method returns value.
 func (c *ARC) Get(key interface{}) (interface{}, error) {
-	v, err := c.getValue(key)
+	v, err := c.GetValue(key)
 	if err != nil {
 		return c.getWithLoader(key, true)
 	}
@@ -139,7 +139,7 @@ func (c *ARC) Get(key interface{}) (interface{}, error) {
 // If it dose not exists key, returns KeyNotFoundError.
 // And send a request which refresh value for specified key if cache object has LoaderFunc.
 func (c *ARC) GetIFPresent(key interface{}) (interface{}, error) {
-	v, err := c.getValue(key)
+	v, err := c.GetValue(key)
 	if err != nil {
 		return c.getWithLoader(key, false)
 	}
@@ -199,7 +199,7 @@ func (c *ARC) get(key interface{}, onLoad bool) (interface{}, error) {
 	return nil, KeyNotFoundError
 }
 
-func (c *ARC) getValue(key interface{}) (interface{}, error) {
+func (c *ARC) GetValue(key interface{}) (interface{}, error) {
 	it, err := c.get(key, false)
 	if err != nil {
 		return nil, err
